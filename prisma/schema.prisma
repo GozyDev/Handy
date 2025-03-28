@@ -1,0 +1,85 @@
+// DATABASE PROVIDER
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ENUM FOR ROLES
+enum Role {
+  CONSUMER
+  PROVIDER
+}
+
+// USER TABLE
+model User {
+  id              String           @id @default(uuid())
+  name            String
+  email           String           @unique
+  password        String
+  role            Role
+
+  // Relations (No need for fields/references here)
+  providerProfile ProviderProfile?
+  consumerProfile ConsumerProfile?
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+// PROVIDER TABLE
+model ProviderProfile {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+
+  services  String[]
+  rate      Float
+  locations String[]
+  bio       String
+
+  // Relation back to User (fields & references only defined here)
+  user      User     @relation(fields: [userId], references: [id])
+
+   bookings          Booking[] 
+}
+
+// CONSUMER TABLE
+model ConsumerProfile {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+
+  interestedServices String[]
+  location          String
+
+  // Relation back to User (fields & references only defined here)
+  user              User     @relation(fields: [userId], references: [id])
+
+   bookings          Booking[] 
+}
+
+enum BookingStatus {
+PENDING
+CONFIRMED
+CANCELLED
+COMPLETED 
+}
+
+model Booking {
+  id String @id @default(uuid())
+
+  selectedServices String[]
+  bookingTime DateTime 
+  location String
+  note String? 
+  status BookingStatus @default(PENDING)
+  createdAt DateTime @default(now())
+
+  consumerProfile ConsumerProfile @relation(fields:[consumerId],references:[id])
+  consumerId String
+
+  providerProfile ProviderProfile @relation(fields:[providerId],references:[id])
+  providerId String
+}
