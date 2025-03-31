@@ -11,9 +11,9 @@ export default function Signup() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<formDataType>({
     role: "",
-    name: "",
-    email: "",
-    password: "",
+    name: "henr",
+    email: "jehrer",
+    password: "rhuereio",
     services: [], // Provider only
     rate: "",
     locations: [], // Provider only

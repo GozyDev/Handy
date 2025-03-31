@@ -3,27 +3,10 @@ export const HOME_SERVICES = [
     {
       id: "1",
       category: "Plumbing",
-      subServices: [
-        "Pipe Repairs",
-        "Drain Cleaning",
-        "Toilet Installation",
-        "Water Heater Repair",
-        "Leak Detection"
-      ],
-      toggle:false
     },
     {
       id: "2",
       category: "Electrical",
-      subServices: [
-        "Wiring Repairs",
-        "Light Fixture Installation",
-        "Circuit Breaker Replacement",
-        "Outlet Installation",
-        "Electrical Inspection"
-      ],
-      toggle:false
-
     },
     {
       id: "3",
