@@ -2,12 +2,14 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
+import { link } from "fs";
 
 interface UserPayload extends jwt.JwtPayload {
   userId: string;
   name: string;
   email: string;
   role: string;
+  link: string;
 }
 
 export async function PUT(req: Request) {
@@ -30,7 +32,7 @@ export async function PUT(req: Request) {
     const userId = decoded.userId;
 
     // 3. Parse the incoming JSON request body
-    const { name, rate, location, bio, services } = await req.json();
+    const { name, rate, location, bio, services , link} = await req.json();
 
     // 4. Update the user's name (in the User table) if provided
     let updatedUser = await prisma.user.update({
@@ -49,6 +51,7 @@ export async function PUT(req: Request) {
         locations: location ? [location.trim()] : undefined,
         bio: bio ? bio.trim() : undefined,
         services: services ? services.map((s: string) => s.trim()) : undefined,
+        link: link !== undefined ? link.trim() : undefined,
       },
     });
 

@@ -57,11 +57,13 @@ export interface errotype{
 
 export interface UserProfile{
 name:string,
+email:string,
 providerProfile:{
   bio:string,
   locations:string[]
   rate:number
   services:string[]
   role:string
+  link:string
 }
 }

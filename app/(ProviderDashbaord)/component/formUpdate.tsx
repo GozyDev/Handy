@@ -16,11 +16,13 @@ export default function FullWidthForm({
   user: UserProfile | undefined;
 }) {
   const [formData, setFormData] = useState({
-    name: `${user?.name}`,
-    rate: `${user?.providerProfile.rate}`,
-    location: `${user?.providerProfile.locations}`,
-    bio: `${user?.providerProfile.bio}`,
+    name: user?.name || "",
+    rate: user?.providerProfile?.rate?.toString() || "",
+    location: user?.providerProfile?.locations?.join(", ") || "",
+    bio: user?.providerProfile?.bio || "",
+    link: user?.providerProfile?.link || "",
   });
+  
   const [laoding, setLoading] = useState(false);
 
   const handleChange = (
@@ -30,9 +32,9 @@ export default function FullWidthForm({
   };
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
+    e.preventDefault();;
+    setLoading(true)
     console.log("Form submitted:", formData);
-    setLoading(true);
     try {
       const response = await fetch("api/provider/editprofile", {
         method: "PUT",
@@ -82,7 +84,7 @@ export default function FullWidthForm({
               name="name"
               value={formData.name}
               onChange={handleChange}
-              required
+              
               className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
               placeholder="Enter your professional name"
             />
@@ -126,6 +128,20 @@ export default function FullWidthForm({
             </div>
           </div>
 
+           {/* List  Field */}
+           <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Social link
+            </label>
+            <input
+              name="link"
+              value={formData.link}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
+              placeholder="Describe your services and experience."
+            />
+          </div>
+
           {/* Bio Field */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
@@ -135,7 +151,7 @@ export default function FullWidthForm({
               name="bio"
               value={formData.bio}
               onChange={handleChange}
-              required
+              
               className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
               rows={4}
               placeholder="Describe your services and experience..."
