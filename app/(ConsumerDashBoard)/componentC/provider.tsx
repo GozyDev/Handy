@@ -10,11 +10,7 @@ const STYLES = {
   hoverEffect: "transition-all duration-300 ease-out hover:-translate-y-0.5"
 };
 
-const returnText = (arr:string)=>{
-  const getArray=arr.split(":")
-  const [categories,service] = getArray
-  return service
-}
+
 
 export default function ProviderCard({ provider }: { provider: ProviderCardProps }) {
   const router = useRouter();
@@ -28,10 +24,10 @@ export default function ProviderCard({ provider }: { provider: ProviderCardProps
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && handleClick()}
-      className={`group relative p-6 rounded-2xl bg-white hover:bg-gray-50 ${STYLES.hoverEffect} shadow-sm hover:shadow-md border border-gray-100/80 hover:border-purple-100/90 cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500`}
+      className={` group relative p-6 rounded-2xl bg-white hover:bg-gray-50 ${STYLES.hoverEffect} shadow-sm hover:shadow-md border border-gray-100/80 hover:border-purple-100/90 cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500`}
       onClick={handleClick}
     >
-      <div className="relative  flex flex-col sm:flex-row gap-4">
+      <div className="relative  flex flex-col sm:flex-row gap-4 ">
         {/* Image Section */}
         <div className="flex-shrink-0 w-20 h-20 sm:w-20 sm:h-20">
           <div className="w-full h-full rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -44,8 +40,8 @@ export default function ProviderCard({ provider }: { provider: ProviderCardProps
           {/* Header Section */}
           <header className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-1">
-                {provider.name}
+              <h2 className="text-xl font-bold text-gray-800 mb-1 capitalize ">
+                {provider.user.name}
               </h2>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <svg
@@ -78,7 +74,7 @@ export default function ProviderCard({ provider }: { provider: ProviderCardProps
               {provider.services.map((service) => (
                 <span key={service} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
                   {
-                    returnText(service)
+                  provider.services
                   }
                 </span>
               ))}

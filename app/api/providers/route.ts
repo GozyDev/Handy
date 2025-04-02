@@ -1,25 +1,23 @@
+// app/api/providers/route.ts (Next.js 13+ using the App Router)
+// or pages/api/providers.ts (for the pages-based approach)
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function GET(req: Request) {
-  try {
-    const { searchParams } = new URL(req.url);
-    const search = searchParams.get("search") || "";
+export async function GET(request: Request) {
+  // Parse query parameters from the URL
+  const { searchParams } = new URL(request.url);
+  const filters = searchParams.get("filters"); // e.g., "Plumbing,Electrician"
+  const filtersArray = filters ? filters.split(",") : [];
 
-    const providers = await prisma.$queryRaw`
-  SELECT 
-    p.*,                  -- All provider profile fields
-    u.name,               -- User's name
-    u.email               -- User's email
-  FROM "ProviderProfile" AS p
-  JOIN "User" AS u        -- Join with User table
-  ON p."userId" = u."id"  -- Matching userId to get user data
-  WHERE ARRAY_TO_STRING(p."services", ',') ILIKE ${'%' + search + '%'}
-`;
+  // Build the query using Prisma
+  const providers = await prisma.providerProfile.findMany({
+    where: {
+      ...(filtersArray.length > 0 && {
+        services: { hasSome: filtersArray },
+      }),
+    },
+    include: { user: true },
+  });
 
-    return NextResponse.json(providers);
-  } catch (error) {
-    console.error("Error fetching providers:", error);
-    return NextResponse.json({ error: "Failed to fetch providers" }, { status: 500 });
-  }
+  return NextResponse.json({ providers });
 }
