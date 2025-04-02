@@ -93,7 +93,7 @@ export default function ProvidersBookingForm({
   };
 
   return (
-    <div className="min-h-screen py-4 sm:py-12 px-2 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-4 sm:py-11 px-2 sm:px-6 lg:px-8 ">
       {/* Status Messages */}
       <div className="max-w-7xl mx-auto mb-8 space-y-4">
         {errorMessage && (
@@ -165,7 +165,7 @@ export default function ProvidersBookingForm({
 
         {/* Booking Form - Enhanced Layout */}
         <div className="w-full lg:w-2/3">
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 px-2 py-8 md:p-8">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 px-2 py-8  md:p-8">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-8 pb-4 border-b border-gray-100">
               Schedule Service
             </h1>

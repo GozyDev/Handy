@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Bars3Icon} from "@heroicons/react/24/outline";
+import { Bars3Icon } from "@heroicons/react/24/outline";
+import SideNav from "./sidenav";
 export default function Header({
   setIsSidebarOpen,
 }: {
@@ -30,15 +31,23 @@ export default function Header({
   }, [router]);
   return (
     <>
-      <header className="bg-white shadow-sm mb-5">
+      <header className="bg-white shadow-sm mb-5 ">
         <div className="max-w-7xl mx-auto px-2 py-6 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            <button
+            {/* <button
               onClick={setIsSidebarOpen}
               className="p-2 bg-white rounded-lg shadow-sm border border-gray-200"
             >
               <Bars3Icon className="w-6 h-6 text-gray-600" />
-            </button>
+            </button> */}
+            <div>
+              <h1 className="hidden lg:block text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                Handy Dashboard
+              </h1>
+            </div>
+            <div>
+              <SideNav/>
+            </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
                 <p className="text-sm font-medium text-gray-700">
